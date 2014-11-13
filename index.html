@@ -26,20 +26,29 @@
                    <label class="control-label">Строка для поиска:</label>
                 </div>
                 <div class="col-sm-8">
-                   <input type="text" ng-model="query"/>   
+                  <form name="my-form" ng-submit="AddHead()">
+                    <div class="input-group">
+                     <input type="text" class="form-control" ng-model="heading"/>
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit" id="addBtn">
+                        <span class="glyphicon glyphicon-plus"></span></button>
+                      </span>
+                  </div>
+                  </form>
+
+
                 </div>
               </div>
               <div class="right col-sm-6">
                   <div class="right">
                         <ul>
-                            <li ng-repeat="poem in poems|filter:query|orderBy:orderProp">
+                            <li ng-repeat="poem in poems|filter:heading|orderBy:orderProp">
                               <span>{{poem.head}}</span>
                             </li>
                         </ul>
                     </div>
               </div>
-              
-            </div>
+          </div>
         </div>
     </div>
 </div>
