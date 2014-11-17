@@ -1,14 +1,13 @@
 "use strict";
-var poemHead = angular.module('poemHeadApp', []);
-
-poemHead.controller('poemHeadCtrl', function ($scope, $http) {
-    $http.get('data/poem.json').success(function (arr) {
-        $scope.poems = arr;
-    });
-    $scope.orderProp = 'head';
-    $scope.AddHead = function () {
-        $scope.poems.push({head: $scope.heading, snippet: ""});
-        $scope.heading = '';
-        $http.post('data/poem.json', $scope.poems);
-    };
-});
+var poemHeadApp = angular.module('poemHeadApp', ['firebase']);
+poemHeadApp.controller('poemHeadCtrl', ['$scope', '$firebase',
+    function($scope, $firebase) {
+        var ref = new Firebase("https://fiery-heat-2625.firebaseio.com");
+        $scope.poems = $firebase(ref).$asArray();
+        $scope.orderProp = 'head';
+        $scope.AddHead = function (e) {
+            $scope.poems.$add({head: $scope.heading, snippet: ""});
+            $scope.heading = '';
+        };
+    }
+    ]);
